@@ -1,0 +1,45 @@
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+-source
+'20'
+-sourcepath
+'C:/Users/franc/Documents/NetBeansProjects/Math613Project1/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2023. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/franc/Documents/NetBeansProjects/Math613Project1/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Math613Project1 1.0.1 API'
+-use
+-version
+-windowtitle
+'Math613Project1 1.0.1 API'
+com.csfrancis555.math613project1
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\src\main\java = 1695488405918
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\allclasses-index.html = 1695492600285
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\allpackages-index.html = 1695492600288
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\copy.svg = 1695492600324
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\element-list = 1695492600210
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\help-doc.html = 1695492600316
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\index-all.html = 1695492600306
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\index.html = 1695492600313
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\javadoc.bat = 1695492565438
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\member-search-index.js = 1695492600289
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\module-search-index.js = 1695492600289
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\overview-tree.html = 1695492600267
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\package-search-index.js = 1695492600289
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\script.js = 1695492600321
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\search-page.js = 1695492600326
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\search.html = 1695492600306
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\search.js = 1695492600326
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\stylesheet.css = 1695492600321
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\tag-search-index.js = 1695492600294
+C:\Users\franc\Documents\NetBeansProjects\Math613Project1\target\site\apidocs\type-search-index.js = 1695492600289
