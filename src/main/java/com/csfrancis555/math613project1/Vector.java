@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 public class Vector {
     
-    ///////////////////////////////////////  DATAFIELDS  ////////////////////
+    ///////////////////////////////////////////////  DATAFIELDS  ////////////////////
     private int n;
     private double[] vector;
 
     
     
     
-    /////////////////////////////////////  CONSTRUCTORS  //////////////////
+    /////////////////////////////////////////////  CONSTRUCTORS  //////////////////
     
     /**
      * Constructor for this vector object
@@ -24,6 +24,9 @@ public class Vector {
         this.n = n;
         this.vector = new double[this.n];
     }//end 1-arg constructor
+    
+    
+    
     
     
     
@@ -69,93 +72,75 @@ public class Vector {
     
     
     
-    /////////////////////////////////  OPERATIONS  //////////////////////////////
-    
-//    /**
-//     * multiply by another vector placed on the right
-//     * @param y the other vector
-//     * @return a new vector with the product of this transposed and the other vector if they're the same size, null otherwise
-//     */
-//    public Vector rightMultiply(Vector y){
-//        Vector p;
-//        if(this.getN() == y.getN()){
-//            //TODO right multiply vectors (transpose this)
-//        }
-//        else{
-//            p = null;
-//        }
-//        return p;
-//    }//end rightMultiply()
-//    
-//    
-//    
-//    /**
-//     * multiply by another vector placed on the left
-//     * @param y the other vector
-//     * @return a new vector with the product of this and the other vector transposed if they're the same size, null otherwise
-//     */
-//    public Vector leftMultiply(Vector y){
-//        Vector p;
-//        if(this.getN() == y.getN()){
-//            //TODO left multiply vectors (transpose y)
-//        }
-//        else{
-//            p = null;
-//        }
-//        return p;
-//    }//end leftMultiply()
-//    
-//    
-//    /**
-//     * multiply this vector by a scalar multiple
-//     * @param s the scalar multiple
-//     * @return the scaled vector
-//     */
-//    public Vector scalarMultiply(double s){
-//        Vector y = new Vector(this.getN());
-//        for(int i=0; i<this.getVector().length; i++){
-//            y.setValue(i, this.getValue(i) * s);
-//        }
-//        return y;
-//    }//end scalarMultiply()
-//    
-//    
-//    /**
-//     * adds this to another vector if they have the same number of dimensions
-//     * @param y the other vector to be added
-//     * @return the vector with the sum of each dimension if they're the same size, null otherwise
-//     */
-//    public Vector sum(Vector y){
-//        Vector z;
-//        if(this.getN() == y.getN()){
-//            //TODO sum the vectors
-//        }
-//        else{
-//            z = null;
-//        }
-//        return z;
-//    }//end sum()
-//    
-//    
-//    /**
-//     * multiply this vector by a matrix on its left
-//     * @param A the matrix to be multiplied by
-//     * @return the resultant vector if they are compatible size, null otherwise
-//     */
-//    public Vector matrixMultiply(Matrix A){
-//        Vector b;
-//        if(this.getN() == A.getN()){
-//            //TODO multiply by matrix on left
-//        }
-//        else{
-//            b = null;
-//        }
-//        return b;
-//    }
     
     
     
-    ////////////////////////////////  FILL VECTOR VALUES  ///////////////////////
+    //////////////////////////////////////////  OPERATIONS  //////////////////////////////
+    
+    /**
+     * multiply this vector by a scalar multiple
+     * @param s the scalar multiple
+     * @return the scaled vector
+     */
+    public Vector scalarMultiply(double s){
+        Vector y = new Vector(this.getN());
+        for(int i=0; i<this.getVector().length; i++){
+            y.setValue(i, this.getValue(i) * s);
+        }
+        return y;
+    }//end scalarMultiply()
+    
+    
+    /**
+     * adds this to another vector if they have the same number of dimensions
+     * @param y the other vector to be added
+     * @return the vector with the sum of each dimension if they're the same size, null otherwise
+     */
+    public Vector sum(Vector y){
+        Vector z;
+        if(this.getN() == y.getN()){
+            z = new Vector(this.getN());
+            for(int i=0; i<this.getVector().length; i++){
+                z.setValue(i, this.getValue(i) + y.getValue(i));
+            }
+        }
+        else{
+            z = null;
+        }
+        return z;
+    }//end sum()
+    
+    
+    /**
+     * multiply this vector by a matrix on its left
+     * @param A the matrix to be multiplied by
+     * @return the resultant vector if they are compatible size, null otherwise
+     */
+    public Vector matrixMultiply(Matrix A){
+        Vector b;
+        if(this.getN() == A.getN()){
+            b = new Vector(this.getN());
+            for(int i=0; i<b.getVector().length; i++){
+                b.setValue(i, 0);
+            }
+            for(int i=0; i<A.getMatrix().length; i++){
+                for(int j=0; j<A.getMatrix()[i].length; j++){
+                    b.setValue(i, b.getValue(i) + A.getValue(i, j) * this.getValue(j));
+                }
+            }
+        }
+        else{
+            b = null;
+        }
+        return b;
+    }//end matrixMultiply()
+    
+    
+    
+    
+    
+    
+    ////////////////////////////////////////  FILL VECTOR VALUES  ///////////////////////
     
     
     /**
@@ -191,7 +176,10 @@ public class Vector {
     
     
     
-    /////////////////////////////////  OVERRIDES  ////////////////////////
+    
+    
+    
+    //////////////////////////////////////////////  OVERRIDES  ////////////////////////
 
     /**
      * a console/terminal friendly textual representation of this vector

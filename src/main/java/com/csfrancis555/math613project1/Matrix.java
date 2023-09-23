@@ -10,13 +10,15 @@ import java.util.Set;
 
 public class Matrix {
     
-    //////////////////////////////  DATAFIELDS  /////////////////////////
+    //////////////////////////////////////////  DATAFIELDS  /////////////////////////
     private int m;
     private int n;
     private double[][] matrix;
 
     
-    ///////////////////////////////  CONSTRUCTORS  /////////////////////
+    
+    
+    ////////////////////////////////////////  CONSTRUCTORS  /////////////////////
     
     /**
      * Creates an empty matrix object to be filled later with either random values between 1 and 0 or loaded in from a .csv file (standard for sensor data collection)
@@ -32,7 +34,8 @@ public class Matrix {
     
     
     
-    ///////////////////////////////  GETTERS & SETTERS  //////////////////////
+    
+    //////////////////////////////////////////  GETTERS & SETTERS  //////////////////////
     
     /**
      * the number of rows in the matrix
@@ -86,77 +89,112 @@ public class Matrix {
     
     
     
-    /////////////////////////////////////////////  OPERATIONS  ////////////////
-    
-//    /**
-//     * Multiply by placing another matrix to the right
-//     * @param B the other matrix
-//     * @return the product of this matrix with the other one on the right if they're compatible, null otherwise
-//     */
-//    public Matrix rightMultiply(Matrix B){
-//        Matrix C;
-//        if(this.getN() == B.getM()){
-//            //TODO right multiply another matrix
-//        }
-//        else{
-//            C = null;
-//        }
-//        return C;
-//    }//end rightMultiply()
-//    
-//    
-//    /**
-//     * Multiply by placing another matrix to the left
-//     * @param B the other matrix
-//     * @return the product of this matrix with the other one on the left if they're compatible, null otherwise
-//     */
-//    public Matrix leftMultiply(Matrix B){
-//        Matrix C;
-//        if(B.getN() == this.getM()){
-//            //TODO left multiply another matrix
-//        }
-//        else{
-//            C = null;
-//        }
-//        return C;
-//    }//end leftMultiply()
-//    
-//    
-//    /**
-//     * multiply this matrix by a scalar value
-//     * @param s the scalar to multiply by
-//     * @return the scaled matrix
-//     */
-//    public Matrix scalarMultiply(double s){
-//        Matrix C = new Matrix(this.getM(), this.getN());
-//        for(int i=0; i<this.getMatrix().length; i++){
-//            for(int j=0; j<this.getMatrix()[i].length; j++){
-//                C.setValue(i, j, this.getMatrix()[i][j] * s);
-//            }
-//        }
-//        return C;
-//    }//end scalarMultiply()
-//    
-//    
-//    /**
-//     * find the sum of this matrix with another appropriately sized matrix
-//     * @param B the other matrix to add to this one
-//     * @return a new matrix with the summed values if they're the same size, null otherwise
-//     */
-//    public Matrix sum(Matrix B){
-//        Matrix C;
-//        if(this.getN() == B.getN() && this.getM() == B.getM()){
-//            //TODO add the matrices
-//        }
-//        else{
-//            C = null;
-//        }
-//        return C;
-//    }//end sum()
     
     
+    ///////////////////////////////////////////////////////  OPERATIONS  ////////////////
     
-    ////////////////////////////////////  FILL MATRIX VALUES  ////////////////////
+    /**
+     * Multiply by placing another matrix to the right
+     * @param B the other matrix
+     * @return the product of this matrix with the other one on the right if they're compatible, null otherwise
+     */
+    public Matrix rightMultiply(Matrix B){
+        Matrix C;
+        if(this.getN() == B.getM()){
+            C = new Matrix(this.getM(), this.getN());
+            for(int i=0; i<C.getMatrix().length; i++){
+                for(int j=0; j<C.getMatrix()[i].length; j++){
+                    C.setValue(i, j, 0);
+                }
+            }
+            for(int i=0; i<this.getMatrix().length; i++){
+                for(int j=0; j<this.getMatrix()[i].length; j++){
+                    for(int k=0; k<this.getMatrix()[i].length; k++){
+                        C.setValue(i, j, C.getValue(i, j) + this.getValue(i, k) * B.getValue(k, j));
+                    }
+                }
+            }
+        }
+        else{
+            C = null;
+        }
+        return C;
+    }//end rightMultiply()
+    
+    
+    /**
+     * Multiply by placing another matrix to the left
+     * @param B the other matrix
+     * @return the product of this matrix with the other one on the left if they're compatible, null otherwise
+     */
+    public Matrix leftMultiply(Matrix B){
+        Matrix C;
+        if(B.getN() == this.getM()){
+            C = new Matrix(this.getM(), this.getN());
+            for(int i=0; i<C.getMatrix().length; i++){
+                for(int j=0; j<C.getMatrix()[i].length; j++){
+                    C.setValue(i, j, 0);
+                }
+            }
+            for(int i=0; i<this.getMatrix().length; i++){
+                for(int j=0; j<this.getMatrix()[i].length; j++){
+                    for(int k=0; k<this.getMatrix()[i].length; k++){
+                        C.setValue(i, j, C.getValue(i, j) + B.getValue(i, k) * this.getValue(k, j));
+                    }
+                }
+            }
+        }
+        else{
+            C = null;
+        }
+        return C;
+    }//end leftMultiply()
+    
+    
+    /**
+     * multiply this matrix by a scalar value
+     * @param s the scalar to multiply by
+     * @return the scaled matrix
+     */
+    public Matrix scalarMultiply(double s){
+        Matrix C = new Matrix(this.getM(), this.getN());
+        for(int i=0; i<this.getMatrix().length; i++){
+            for(int j=0; j<this.getMatrix()[i].length; j++){
+                C.setValue(i, j, this.getMatrix()[i][j] * s);
+            }
+        }
+        return C;
+    }//end scalarMultiply()
+    
+    
+    /**
+     * find the sum of this matrix with another appropriately sized matrix
+     * @param B the other matrix to add to this one
+     * @return a new matrix with the summed values if they're the same size, null otherwise
+     */
+    public Matrix sum(Matrix B){
+        Matrix C;
+        if(this.getN() == B.getN() && this.getM() == B.getM()){
+            C = new Matrix(this.getM(), this.getN());
+            for(int i=0; i<this.getMatrix().length; i++){
+                for(int j=0; j<this.getMatrix()[i].length; j++){
+                    C.setValue(i, j, this.getValue(i, j) + B.getValue(i, j));
+                }
+            }
+        }
+        else{
+            C = null;
+        }
+        return C;
+    }//end sum()
+    
+    
+    
+    
+    
+    
+    
+    /////////////////////////////////////////////////  FILL MATRIX VALUES  ////////////////////
     
     
     /**
@@ -202,7 +240,10 @@ public class Matrix {
     
     
     
-    /////////////////////////////////  OVERRIDES  ////////////////////////
+    
+    
+    
+    ///////////////////////////////////////////////  OVERRIDES  ////////////////////////
 
     /**
      * a console/terminal friendly textual representation of this matrix
