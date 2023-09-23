@@ -2,4 +2,4 @@
 ___
 Class project for an Applied Linear Algebra course taught at Indiana State University in the fall semester of 2023.
 
-The javadoc for this project can be found at 
+The javadoc for this project can be found at https://francis-chris5.github.io/Math613Project1 
