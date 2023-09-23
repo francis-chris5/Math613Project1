@@ -1,6 +1,12 @@
 
 package com.csfrancis555.math613project1;
 
+import java.io.File;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Set;
+
 
 public class Matrix {
     
@@ -29,8 +35,8 @@ public class Matrix {
     ///////////////////////////////  GETTERS & SETTERS  //////////////////////
     
     /**
-     * 
-     * @return the number of rows in the matrix
+     * the number of rows in the matrix
+     * @return 
      */
     public int getM() {
         return m;
@@ -38,8 +44,8 @@ public class Matrix {
 
     
     /**
-     * 
-     * @return the number of columns in the matrix
+     * the number of columns in the matrix
+     * @return 
      */
     public int getN() {
         return n;
@@ -69,8 +75,8 @@ public class Matrix {
 
     
     /**
-     * 
-     * @return the entire matrix as a 2D array
+     * the entire matrix as a 2D array
+     * @return 
      */
     public double[][] getMatrix() {
         return matrix;
@@ -82,71 +88,71 @@ public class Matrix {
     
     /////////////////////////////////////////////  OPERATIONS  ////////////////
     
-    /**
-     * Multiply by placing another matrix to the right
-     * @param B the other matrix
-     * @return the product of this matrix with the other one on the right if they're compatible, null otherwise
-     */
-    public Matrix rightMultiply(Matrix B){
-        Matrix C;
-        if(this.getN() == B.getM()){
-            //TODO right multiply another matrix
-        }
-        else{
-            C = null;
-        }
-        return C;
-    }//end rightMultiply()
-    
-    
-    /**
-     * Multiply by placing another matrix to the left
-     * @param B the other matrix
-     * @return the product of this matrix with the other one on the left if they're compatible, null otherwise
-     */
-    public Matrix leftMultiply(Matrix B){
-        Matrix C;
-        if(B.getN() == this.getM()){
-            //TODO left multiply another matrix
-        }
-        else{
-            C = null;
-        }
-        return C;
-    }//end leftMultiply()
-    
-    
-    /**
-     * multiply this matrix by a scalar value
-     * @param s the scalar to multiply by
-     * @return the scaled matrix
-     */
-    public Matrix scalarMultiply(double s){
-        Matrix C = new Matrix(this.getM(), this.getN());
-        for(int i=0; i<this.getMatrix().length; i++){
-            for(int j=0; j<this.getMatrix()[i].length; j++){
-                C.setValue(i, j, this.getMatrix()[i][j] * s);
-            }
-        }
-        return C;
-    }//end scalarMultiply()
-    
-    
-    /**
-     * find the sum of this matrix with another appropriately sized matrix
-     * @param B the other matrix to add to this one
-     * @return a new matrix with the summed values if they're the same size, null otherwise
-     */
-    public Matrix sum(Matrix B){
-        Matrix C;
-        if(this.getN() == B.getN() && this.getM() == B.getM()){
-            //TODO add the matrices
-        }
-        else{
-            C = null;
-        }
-        return C;
-    }//end sum()
+//    /**
+//     * Multiply by placing another matrix to the right
+//     * @param B the other matrix
+//     * @return the product of this matrix with the other one on the right if they're compatible, null otherwise
+//     */
+//    public Matrix rightMultiply(Matrix B){
+//        Matrix C;
+//        if(this.getN() == B.getM()){
+//            //TODO right multiply another matrix
+//        }
+//        else{
+//            C = null;
+//        }
+//        return C;
+//    }//end rightMultiply()
+//    
+//    
+//    /**
+//     * Multiply by placing another matrix to the left
+//     * @param B the other matrix
+//     * @return the product of this matrix with the other one on the left if they're compatible, null otherwise
+//     */
+//    public Matrix leftMultiply(Matrix B){
+//        Matrix C;
+//        if(B.getN() == this.getM()){
+//            //TODO left multiply another matrix
+//        }
+//        else{
+//            C = null;
+//        }
+//        return C;
+//    }//end leftMultiply()
+//    
+//    
+//    /**
+//     * multiply this matrix by a scalar value
+//     * @param s the scalar to multiply by
+//     * @return the scaled matrix
+//     */
+//    public Matrix scalarMultiply(double s){
+//        Matrix C = new Matrix(this.getM(), this.getN());
+//        for(int i=0; i<this.getMatrix().length; i++){
+//            for(int j=0; j<this.getMatrix()[i].length; j++){
+//                C.setValue(i, j, this.getMatrix()[i][j] * s);
+//            }
+//        }
+//        return C;
+//    }//end scalarMultiply()
+//    
+//    
+//    /**
+//     * find the sum of this matrix with another appropriately sized matrix
+//     * @param B the other matrix to add to this one
+//     * @return a new matrix with the summed values if they're the same size, null otherwise
+//     */
+//    public Matrix sum(Matrix B){
+//        Matrix C;
+//        if(this.getN() == B.getN() && this.getM() == B.getM()){
+//            //TODO add the matrices
+//        }
+//        else{
+//            C = null;
+//        }
+//        return C;
+//    }//end sum()
     
     
     
@@ -157,16 +163,92 @@ public class Matrix {
      * Fills this matrix with random values between 0 and 1
      */
     public void randomFill(){
-        //TODO fill the matrix with random values
+        Random rand = new Random();
+        for(int i=0; i<this.getMatrix().length; i++){
+            for(int j=0; j<this.getMatrix()[i].length; j++){
+                this.setValue(i, j, rand.nextDouble());
+            }
+        }
     }//end randomFill()
     
     
     /**
      * In a realistic situation sensors would collect the massive amounts of data and store it in a way that could typically be easily exported as a .csv file, for test cases in class creating the .csv file in Excel seems reasonable.
+     * In the event of a file reading error it will call the randomFill() method
      * @param filepath the filepath or URL where the .csv file is to be found
      */
     public void fillFromCSV(String filepath){
-        //TODO fill the matrix with values listed in a .csv file
-    }
+        File csv = new File(filepath);
+        try{
+            Scanner fromFile = new Scanner(csv);
+            int i=0, j=0;
+            while(fromFile.hasNextLine()){
+                j=0;
+                String line = fromFile.nextLine();
+                Scanner lineReader = new Scanner(line);
+                lineReader.useDelimiter(",");
+                while(lineReader.hasNextDouble()){
+                    this.setValue(i, j, lineReader.nextDouble());
+                    j++;
+                }
+                i++;
+            }
+        }
+        catch(Exception e){
+            this.randomFill();
+        }
+    }//end fillFromCSV()
+    
+    
+    
+    
+    /////////////////////////////////  OVERRIDES  ////////////////////////
+
+    /**
+     * a console/terminal friendly textual representation of this matrix
+     * @return 
+     */
+    @Override
+    public String toString() {
+        String representation = new String("\n");
+        for(int i=0; i<this.getMatrix().length; i++){
+            for(int j=0; j<this.getMatrix()[i].length; j++){
+                representation += this.getValue(i, j) + " ";
+            }
+            representation += "\n";
+        }
+        return representation;
+    }//end toString()
+
+    
+    
+    /**
+     * compares to see if two matrices are equal
+     * @param obj the other matrix to compare to
+     * @return 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        try{
+            Matrix B = (Matrix)obj;
+            if(this.getN() != B.getN() || this.getM() != B.getM()){
+                return false;
+            }
+            boolean checking = true;
+            for(int i=0; i<this.getMatrix().length; i++){
+                for(int j=0; j<this.getMatrix()[i].length; j++){
+                    if(this.getValue(i, j) != B.getValue(i, j)){
+                        checking = false;
+                    }
+                }
+            }
+            return checking;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }//end equals()
+    
+    
     
 }//end Matrix class
