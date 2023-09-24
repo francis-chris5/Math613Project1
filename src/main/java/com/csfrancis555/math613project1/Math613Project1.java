@@ -4,6 +4,10 @@ package com.csfrancis555.math613project1;
 
 public class Math613Project1 {
 
+    /**
+     * Main method for test cases and telemetry on the project
+     * @param args command line starting arguments are not used here
+     */
     public static void main(String[] args) {
         Vector v = new Vector(3);
         //v.randomFill();

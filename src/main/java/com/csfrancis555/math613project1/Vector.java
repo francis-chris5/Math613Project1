@@ -62,8 +62,8 @@ public class Vector {
 
     
     /**
-     * 
-     * @return the number of dimensions in the vector
+     * the number of dimensions in the vector
+     * @return 
      */
     public int getN() {
         return n;

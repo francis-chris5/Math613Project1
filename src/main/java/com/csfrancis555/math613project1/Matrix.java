@@ -2,10 +2,8 @@
 package com.csfrancis555.math613project1;
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 
 public class Matrix {
@@ -30,6 +28,18 @@ public class Matrix {
         this.n = n;
         matrix = new double[m][n];
     }//end 2-arg constructor
+
+    
+    
+    /**
+     * creates a matrix object from a 2D array
+     * @param matrix the 2D array to turn into a matrix object
+     */
+    public Matrix(double[][] matrix) {
+        this.matrix = matrix;
+    }//end 1-arg constructor
+    
+    
 
     
     
