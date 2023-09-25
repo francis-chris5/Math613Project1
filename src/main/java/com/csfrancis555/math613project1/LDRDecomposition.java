@@ -63,7 +63,7 @@ public class LDRDecomposition {
     /////////////////////////////////////////  GETTERS & SETTERS  /////////////////
 
     /**
-     * Returns a key-value mapping of the L, D, R, and inverseD matrices
+     * Returns a key-value mapping of the "L", "D", "R", and "inverseD" matrices
      * @return 
      */
     public HashMap<String, Matrix> getMatrices() {

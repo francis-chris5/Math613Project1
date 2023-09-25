@@ -222,7 +222,7 @@ public class Matrix {
     
     /**
      * In a realistic situation sensors would collect the massive amounts of data and store it in a way that could typically be easily exported as a .csv file, for test cases in class creating the .csv file in Excel seems reasonable.
-     * In the event of a file reading error it will call the randomFill() method
+     * In the event of a file reading error it will call the randomFill() method instead
      * @param filepath the filepath or URL where the .csv file is to be found
      */
     public void fillFromCSV(String filepath){
@@ -246,6 +246,29 @@ public class Matrix {
             this.randomFill();
         }
     }//end fillFromCSV()
+    
+    
+    
+    /**
+     * Class method to return an identity matrix of a desired size
+     * @param m the number of rows
+     * @param n the number of columns
+     * @return 
+     */
+    public static Matrix identity(int m, int n){
+        double[][] temp = new double[m][n];
+        for(int i=0; i<temp.length; i++){
+            for(int j=0; j<temp.length; j++){
+                if(i == j){
+                    temp[i][j] = 1;
+                }
+                else{
+                    temp[i][j] = 0;
+                }
+            }
+        }
+        return new Matrix(temp);
+    }//end identity()
     
     
     

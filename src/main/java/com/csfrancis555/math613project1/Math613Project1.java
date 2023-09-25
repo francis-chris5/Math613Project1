@@ -33,5 +33,14 @@ public class Math613Project1 {
         Vector y = v.matrixMultiply(A);
         System.out.println(y);
         
+        System.out.println("\n\n");
+        System.out.println("gausian elimination");
+        Gaussian g = new Gaussian(A);
+        Matrix r = g.eliminate();
+        System.out.println(r);
+        
+        System.out.println(g.getFactoredLU().get("L"));
+        System.out.println(g.getFactoredLU().get("U"));
+        
     }
 }
