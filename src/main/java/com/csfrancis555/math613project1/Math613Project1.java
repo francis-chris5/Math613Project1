@@ -36,11 +36,17 @@ public class Math613Project1 {
         System.out.println("\n\n");
         System.out.println("gausian elimination");
         Gaussian g = new Gaussian(A);
-        Matrix r = g.eliminate();
-        System.out.println(r);
         
-        System.out.println(g.getFactoredLU().get("L"));
-        System.out.println(g.getFactoredLU().get("U"));
+        System.out.println("L = " + g.getFactoredLU().get("L"));
+        System.out.println("L inverse = " + g.getFactoredLU().get("inverseL"));
+        System.out.println("U = " + g.getFactoredLU().get("U"));
+        System.out.println("determinant = " + g.getDeterminant());
+        
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Solve Ax=b");
+        Vector x = g.backFill(v);
+        System.out.println(x);
         
     }
 }

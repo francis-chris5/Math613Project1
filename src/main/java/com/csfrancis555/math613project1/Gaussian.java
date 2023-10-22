@@ -27,6 +27,7 @@ public class Gaussian {
         this.U = this.eliminate();
         this.factoredLU.put("L", this.L);
         this.factoredLU.put("U", this.U);
+        this.factoredLU.put("inverseL", this.getLInverse(this.L, 0));
     }//end 1-arg constructor
     
     
@@ -69,11 +70,38 @@ public class Gaussian {
     }//end eliminate()
     
     
-//    public Vector backFill(){
-//        Vector x;
-//        //TODO use the reduced matrix to backfill a solution to Ax=b
-//        return x;
-//    }//end backFill()
+    public Vector backFill(Vector b){
+        Vector x = new Vector(U.getMatrix().length);
+        //TODO solve Ux = L^1*b instead
+        return x;
+    }//end backFill()
+    
+    
+    
+    /**
+     * The determinant of the given matrix found by the LU factorization
+     * @return 
+     */
+    public double getDeterminant(){
+        double d = 1;
+        for(int i=0; i<U.getMatrix().length; i++){
+            d *= U.getValue(i, i);
+        }
+        return d;
+    }//end getDeterminant()
+    
+
+    
+    
+    private Matrix getLInverse(Matrix lower, int index){
+        int m = lower.getMatrix().length;
+        int n = lower.getMatrix()[0].length;
+        Matrix inverse = Matrix.identity(m, n);
+        //TODO efficiently find inverse for lower triangular matrix
+        return inverse;
+    }//end getLInvers()
+    
+    
     
     
 }//end Gaussian class
