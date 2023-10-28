@@ -6,6 +6,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 
+/**
+ * The matrix objects to be used in this project
+ * @author Chris Francis
+ */
 public class Matrix {
     
     //////////////////////////////////////////  DATAFIELDS  /////////////////////////

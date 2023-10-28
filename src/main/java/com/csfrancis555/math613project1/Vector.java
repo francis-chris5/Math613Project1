@@ -5,6 +5,11 @@ import java.io.File;
 import java.util.Random;
 import java.util.Scanner;
 
+
+/**
+ * The vector objects to be used in this project
+ * @author Chris Francis
+ */
 public class Vector {
     
     ///////////////////////////////////////////////  DATAFIELDS  ////////////////////
@@ -111,6 +116,12 @@ public class Vector {
     }//end sum()
     
     
+    
+    /**
+     * Finds the difference between this vector and another one
+     * @param y the other vector of the same size to find the difference between
+     * @return a vector with the discrepancies for each dimension in the two vectors, or null if the two vectors are not the same size
+     */
     public Vector difference(Vector y){
         Vector z;
         if(this.getN() == y.getN()){
@@ -191,13 +202,51 @@ public class Vector {
     
     
     
-    public static Vector Zero(int n){
+    /**
+     * Creates a zero vector in the desired size
+     * @param n the number of dimensions for this zero vector
+     * @return an n-dimensional zero vector
+     */
+    public static Vector zero(int n){
         Vector zero = new Vector(n);
         for(int i=0; i<n; i++){
             zero.setValue(i, 0);
         }
         return zero;
     }//end Zero()
+    
+    
+    
+    /**
+     * Finds the specified norm type for this vector
+     * @param type the type of norm to find, e.q. 1, 2, or infinite
+     * @return 
+     */
+    public double getNorm(Norm type){
+        switch(type){
+            case ONE:
+                double sum = 0;
+                for(int i=0; i<n; i++){
+                    sum += Math.abs(getValue(i));
+                }
+                return sum;
+            case TWO:
+                double squares = 0;
+                for(int i=0; i<n; i++){
+                    squares += Math.pow(getValue(i), 2);
+                }
+                return Math.sqrt(squares);
+            case INFINITE:
+                double max = getValue(0);
+                for(int i=0; i<n; i++){
+                    if(getValue(i) > max){
+                        max = Math.abs(getValue(i));
+                    }
+                }
+                return max;
+        }
+        return 0; //only reachable upon a not possible error, the compiler doesn't know this
+    }//end getNorm()
     
     
     

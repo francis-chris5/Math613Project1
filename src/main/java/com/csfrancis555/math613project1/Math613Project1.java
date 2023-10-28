@@ -4,6 +4,10 @@ package com.csfrancis555.math613project1;
 import java.util.HashMap;
 
 
+/**
+ * The Main class for demonstrating a test case of the project objects
+ * @author Chris Francis
+ */
 public class Math613Project1 {
 
     /**
@@ -36,6 +40,9 @@ public class Math613Project1 {
         System.out.println("b' = " + estimate);
         Vector difference = v.difference(estimate);
         System.out.println(difference);
+        System.out.println("one-norm: " + difference.getNorm(Norm.ONE));
+        System.out.println("two-norm: " + difference.getNorm(Norm.TWO));
+        System.out.println("inf-norm: " + difference.getNorm(Norm.INFINITE));
         
         long end = System.nanoTime();
         long duration = end - start;

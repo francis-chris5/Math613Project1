@@ -4,6 +4,10 @@ package com.csfrancis555.math613project1;
 import java.util.HashMap;
 
 
+/**
+ * Static class of methods for Gaussian Elimination related operations on a Matrix object
+ * @author Chris Francis
+ */
 public class Gaussian {
     
     ////////////////////////////////////  OPERATIONS  /////////////////////
@@ -52,7 +56,7 @@ public class Gaussian {
                 reduced.setValue(i, j, A.getValue(i, j));
             }
         }
-        Vector solution = Vector.Zero(b.getN());
+        Vector solution = Vector.zero(b.getN());
         solution.setValue(0, b.getValue(0));
         for(int i=1; i<reduced.getMatrix().length; i++){
             double pivot = reduced.getValue(i, i-1) / reduced.getValue(i-1, i-1);

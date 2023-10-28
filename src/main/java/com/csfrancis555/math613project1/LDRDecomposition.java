@@ -3,6 +3,11 @@ package com.csfrancis555.math613project1;
 
 import java.util.HashMap;
 
+
+/**
+ * Class to handle LDR Decomposition for the Jacobi Method
+ * @author Chris Francis
+ */
 public class LDRDecomposition {
     
     ///////////////////////////  DATA FIELDS  //////////////////////////
