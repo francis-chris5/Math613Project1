@@ -4,7 +4,7 @@
  * This project will:
  * <ul>
  *      <li>Apply Gaussian Elimination and Back Substitution to solve systems of equations</li>
- *      <li>Compute determinants, LU Decomposition, and Inverses</li>
+ *      <li>Compute determinants, LU Decomposition</li>
  *      <li>Apply the Jacobi Method to process large datasets</li>
  * </ul>
  * 

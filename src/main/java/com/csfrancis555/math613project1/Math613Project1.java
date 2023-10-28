@@ -15,6 +15,7 @@ public class Math613Project1 {
      * @param args command line starting arguments are not used here
      */
     public static void main(String[] args) {
+        RandomValues rv = new RandomValues(10, 10);
         Vector v = new Vector(3);
         //v.randomFill();
         v.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/vector.csv");
