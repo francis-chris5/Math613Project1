@@ -6,83 +6,85 @@ import java.util.HashMap;
 
 public class Gaussian {
     
-    ////////////////////////////  DATAFIELDS  ////////////////////////
-    private Matrix A;
-    private Matrix L;
-    private Matrix U;
-    private HashMap<String, Matrix> factoredLU = new HashMap<>();
-    
-    
-    
-    ////////////////////////////  CONSTRUCTORS  /////////////////////
-
-    /**
-     * gaussian elimination reduction on a given matrix for backfill solutions and an LU factorization
-     * an identity matrix is popped into L to initialize it and then both L and U are filled by calling the elimination method
-     * @param A The matrix to be reduced for solving with back substitution and LU factorization
-     */
-    public Gaussian(Matrix A) {
-        this.A = A;
-        this.L = Matrix.identity(this.A.getM(), this.A.getN());
-        this.U = this.eliminate();
-        this.factoredLU.put("L", this.L);
-        this.factoredLU.put("U", this.U);
-        this.factoredLU.put("inverseL", this.getLInverse(this.L, 0));
-    }//end 1-arg constructor
-    
-    
-    
-    /////////////////////////////////  GETTERS AND SETTERS  /////////////////
-
-    /**
-     * retrieves a key-value mapping of the "L" "U" factorization of the matrix
-     * @return 
-     */
-    public HashMap<String, Matrix> getFactoredLU() {
-        return factoredLU;
-    }
-    
-    
-    
-    
-    
-    
-    
     ////////////////////////////////////  OPERATIONS  /////////////////////
     
+
     /**
-     * applies gaussian elimination to reduce the given matrix
-     * for each row after the first number take the element i(i-1) and divide by (i-1)(i-1) to get the pivot, then walk through row subtracting element(i-1)j from element ii  
-     * @return the gausian elimination reduced matrix
+     * applies gaussian elimination to reduce the given matrix to find L and U
+     * @param A the matrix to be factored
+     * @return key value pair collection holding the matrices "L" and "U"
      */
-    public Matrix eliminate(){
-        Matrix reduced = new Matrix(A.getMatrix());
-        for(int i=1; i<A.getMatrix().length; i++){
-            double pivot = A.getValue(i, i-1) / A.getValue(i-1, i-1);
-            if(A.getValue(i, i-1) != 0){
+    public static HashMap<String, Matrix> factorLU(Matrix A){
+        Matrix U = new Matrix(A.getM(), A.getN());
+        for(int i=0; i<A.getMatrix().length; i++){
+            for(int j=0; j<A.getMatrix()[i].length; j++){
+                U.setValue(i, j, A.getValue(i, j));
+            }
+        }
+        Matrix L = Matrix.identity(U.getM(), U.getN());
+        for(int i=1; i<U.getMatrix().length; i++){
+            double pivot = U.getValue(i, i-1) / U.getValue(i-1, i-1);
+            if(U.getValue(i, i-1) != 0){
                 L.setValue(i, i-1, pivot);
-                for(int j=i-1; j<A.getMatrix()[i].length; j++){
-                    reduced.setValue(i, j, A.getValue(i, j) - pivot * A.getValue(i-1, j));
+                for(int j=i-1; j<U.getMatrix()[i].length; j++){
+                    U.setValue(i, j, U.getValue(i, j) - pivot * U.getValue(i-1, j));
                 }
             }
         }
-        return reduced;
+        HashMap<String, Matrix> factorization = new HashMap<>();
+        factorization.put("L", L);
+        factorization.put("U", U);
+        return factorization;
+    }//end reduce()
+    
+    
+    
+    /**
+     * Uses gaussian elimination to solve a system of equations in the form A <b>x</b> = <b>b</b>
+     * @param A the coefficient matrix from the system of equations
+     * @param b the vector of solutions from each equation in the original system of equations
+     * @return the vector <b>x</b> of solutions to the system of equations
+     */
+    public static Vector eliminate(Matrix A, Vector b){
+        Matrix reduced = new Matrix(A.getM(), A.getN());
+        for(int i=0; i<A.getMatrix().length; i++){
+            for(int j=0; j<A.getMatrix()[i].length; j++){
+                reduced.setValue(i, j, A.getValue(i, j));
+            }
+        }
+        Vector solution = Vector.Zero(b.getN());
+        solution.setValue(0, b.getValue(0));
+        for(int i=1; i<reduced.getMatrix().length; i++){
+            double pivot = reduced.getValue(i, i-1) / reduced.getValue(i-1, i-1);
+            if(reduced.getValue(i, i-1) != 0){
+                for(int j=i-1; j<reduced.getMatrix()[i].length; j++){
+                    reduced.setValue(i, j, reduced.getValue(i, j) - pivot * reduced.getValue(i-1, j));
+                }
+                solution.setValue(i, b.getValue(i) - pivot * solution.getValue(i-1));
+            }
+        }
+        for(int i=reduced.getMatrix().length-1; i>=0; i--){
+            double reduction = reduced.getValue(i, i);
+            for(int j=reduced.getMatrix()[i].length-1; j>i; j--){
+                solution.setValue(i, solution.getValue(i) - reduced.getValue(i, j)*solution.getValue(j));
+            }
+            solution.setValue(i, solution.getValue(i)/reduction);
+        }
+        return solution;
     }//end eliminate()
     
     
-    public Vector backFill(Vector b){
-        Vector x = new Vector(U.getMatrix().length);
-        //TODO solve Ux = L^1*b instead
-        return x;
-    }//end backFill()
-    
+
     
     
     /**
      * The determinant of the given matrix found by the LU factorization
-     * @return 
+     * @param A the matrix to find the determinant of
+     * @return the determinant of the matrix
      */
-    public double getDeterminant(){
+    public static double getDeterminant(Matrix A){
+        HashMap<String, Matrix> LU = factorLU(A);
+        Matrix U = LU.get("U");
         double d = 1;
         for(int i=0; i<U.getMatrix().length; i++){
             d *= U.getValue(i, i);
@@ -91,17 +93,6 @@ public class Gaussian {
     }//end getDeterminant()
     
 
-    
-    
-    private Matrix getLInverse(Matrix lower, int index){
-        int m = lower.getMatrix().length;
-        int n = lower.getMatrix()[0].length;
-        Matrix inverse = Matrix.identity(m, n);
-        //TODO efficiently find inverse for lower triangular matrix
-        return inverse;
-    }//end getLInvers()
-    
-    
     
     
 }//end Gaussian class

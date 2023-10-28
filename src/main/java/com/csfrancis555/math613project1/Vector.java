@@ -111,6 +111,21 @@ public class Vector {
     }//end sum()
     
     
+    public Vector difference(Vector y){
+        Vector z;
+        if(this.getN() == y.getN()){
+            z = new Vector(this.getN());
+            for(int i=0; i<this.getVector().length; i++){
+                z.setValue(i, this.getValue(i) - y.getValue(i));
+            }
+        }
+        else{
+            z = null;
+        }
+        return z;
+    }//end sum()
+    
+    
     /**
      * multiply this vector by a matrix on its left
      * @param A the matrix to be multiplied by
@@ -173,6 +188,16 @@ public class Vector {
             this.randomFill();
         }
     }//end fillFromCSV()
+    
+    
+    
+    public static Vector Zero(int n){
+        Vector zero = new Vector(n);
+        for(int i=0; i<n; i++){
+            zero.setValue(i, 0);
+        }
+        return zero;
+    }//end Zero()
     
     
     

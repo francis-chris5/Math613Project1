@@ -1,6 +1,8 @@
 
 package com.csfrancis555.math613project1;
 
+import java.util.HashMap;
+
 
 public class Math613Project1 {
 
@@ -13,40 +15,47 @@ public class Math613Project1 {
         //v.randomFill();
         v.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/vector.csv");
         System.out.println(v);
+        
 
         Matrix A = new Matrix(3, 3);
         //A.randomFill();
         A.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/matrix.csv");
         System.out.println(A);
         
-        Matrix B = new Matrix(3, 3);
-        Matrix C = new Matrix(3, 3);
-        B.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/matrix.csv");
-        C.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/matrix.csv");
-        Matrix D = A.sum(B);
-        Matrix E = A.scalarMultiply(3);
-        Matrix F = A.rightMultiply(B);
-        System.out.println(D);
-        System.out.println(E);
-        System.out.println(F);
         
-        Vector y = v.matrixMultiply(A);
-        System.out.println(y);
         
-        System.out.println("\n\n");
-        System.out.println("gausian elimination");
-        Gaussian g = new Gaussian(A);
+        long start = System.nanoTime();
         
-        System.out.println("L = " + g.getFactoredLU().get("L"));
-        System.out.println("L inverse = " + g.getFactoredLU().get("inverseL"));
-        System.out.println("U = " + g.getFactoredLU().get("U"));
-        System.out.println("determinant = " + g.getDeterminant());
+        System.out.println("\n\n\tApproximate Solution to Ax=b:");
+        Vector x = Gaussian.eliminate(A, v);
+        System.out.println("x' = " + x);
         
-        System.out.println("");
-        System.out.println("");
-        System.out.println("Solve Ax=b");
-        Vector x = g.backFill(v);
-        System.out.println(x);
         
-    }
-}
+        System.out.println("\n\n\tSystem Created Rounding Error");
+        Vector estimate = x.matrixMultiply(A);
+        System.out.println("b' = " + estimate);
+        Vector difference = v.difference(estimate);
+        System.out.println(difference);
+        
+        long end = System.nanoTime();
+        long duration = end - start;
+        System.out.println("\n\nThe processing took " + duration + " nano seconds.");
+        
+        
+        ////////////////////////////  EXTRAS  //////////////////////////////////
+        
+        System.out.println("\n\n\tEXTRA FEATURES");
+        System.out.println("\n\n\tDeterminant of A");
+        double d = Gaussian.getDeterminant(A);
+        System.out.println(d);
+        
+        
+        System.out.println("\n\n\tLU Factorization of A");
+        HashMap<String, Matrix> LU = Gaussian.factorLU(A);
+        System.out.println("L = " + LU.get("L"));
+        System.out.println("U = " + LU.get("U"));
+        
+        
+
+    }//end main()
+}//end Main class
