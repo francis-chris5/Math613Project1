@@ -15,18 +15,29 @@ public class Math613Project1 {
      * @param args command line starting arguments are not used here
      */
     public static void main(String[] args) {
-        RandomValues rv = new RandomValues(10, 10);
-        Vector v = new Vector(3);
+        //RandomValues rv = new RandomValues(10, 10);
+        Vector v = new Vector(10);
         //v.randomFill();
         v.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/vector.csv");
-        System.out.println(v);
+        v = v.scalarMultiply(10);
+        System.out.println("b = \n" + v);
         
 
-        Matrix A = new Matrix(3, 3);
+        Matrix A = new Matrix(10, 10);
         //A.randomFill();
         A.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/matrix.csv");
-        System.out.println(A);
+        A = A.scalarMultiply(10);
+        System.out.println("A = \n" + A);
         
+        
+        
+        Matrix B = new Matrix(10, 10);
+        //B.randomFill();
+        B.fillFromCSV("C:/Users/franc/Documents/NetBeansProjects/Math613Project1/matrix.csv");
+        B = B.scalarMultiply(10);
+        B = B.rightMultiply(B.transpose());
+        B = B.scalarMultiply(0.5);
+        System.out.println("B = \n" + B);
         
         
         long start = System.nanoTime();
@@ -40,28 +51,21 @@ public class Math613Project1 {
         Vector estimate = x.matrixMultiply(A);
         System.out.println("b' = " + estimate);
         Vector difference = v.difference(estimate);
-        System.out.println(difference);
+        System.out.println("Difference: " + difference);
         System.out.println("one-norm: " + difference.getNorm(Norm.ONE));
         System.out.println("two-norm: " + difference.getNorm(Norm.TWO));
         System.out.println("inf-norm: " + difference.getNorm(Norm.INFINITE));
+        
+        
+        System.out.println("\n\n\tEignenvalues of B");
+        Jacobi J = new Jacobi(B);
+        System.out.println("J = \n" + J.reduced(0.001));
         
         long end = System.nanoTime();
         long duration = end - start;
         System.out.println("\n\nThe processing took " + duration + " nano seconds.");
         
-        
-        ////////////////////////////  EXTRAS  //////////////////////////////////
-        
-        System.out.println("\n\n\tEXTRA FEATURES");
-        System.out.println("\n\n\tDeterminant of A");
-        double d = Gaussian.getDeterminant(A);
-        System.out.println(d);
-        
-        
-        System.out.println("\n\n\tLU Factorization of A");
-        HashMap<String, Matrix> LU = Gaussian.factorLU(A);
-        System.out.println("L = " + LU.get("L"));
-        System.out.println("U = " + LU.get("U"));
+
         
         
 

@@ -204,6 +204,22 @@ public class Matrix {
     
     
     
+    /**
+     * finds the transpose of the Matrix
+     * @return the transpose of the matrix
+     */
+    public Matrix transpose(){
+        Matrix T = new Matrix(this.getM(), this.getN());
+        for(int i=0; i<this.getM(); i++){
+            for(int j=0; j<this.getN(); j++){
+                T.setValue(j , i, this.getValue(i, j));
+            }
+        }
+        return T;
+    }//end transpose()
+    
+    
+    
     
     
     
