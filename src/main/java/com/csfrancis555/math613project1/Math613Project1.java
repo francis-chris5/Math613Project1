@@ -1,9 +1,6 @@
 
 package com.csfrancis555.math613project1;
 
-import java.util.HashMap;
-
-
 /**
  * The Main class for demonstrating a test case of the project objects
  * @author Chris Francis
